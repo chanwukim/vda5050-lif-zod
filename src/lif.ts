@@ -95,7 +95,7 @@ export const ControlPointSchema = z.object({
   /** @type {float64} Unit: metre. Y position on the layout in reference to the global origin. */
   y: z.number(),
   /** @type {float64} (optional) Range:[0.0 ... float64.max]. The weight with which this control point pulls on the curve. When not defined, the default is 1.0. */
-  weight: z.number().min(0).optional(),
+  weight: z.number().min(0).optional().default(1.0),
 });
 export type ControlPoint = z.infer<typeof ControlPointSchema>;
 
@@ -134,7 +134,7 @@ export const VehicleTypeEdgePropertySchema = z.object({
   /** @type {float64} Unit: rad. (optional) Orientation of the vehicle on the edge. */
   vehicleOrientation: z.number().optional(),
   /** @type {string} (optional) Enum {GLOBAL, TANGENTIAL}. If not defined, the default value is "TANGENTIAL". */
-  orientationType: z.enum(["GLOBAL", "TANGENTIAL"]).optional(),
+  orientationType: z.enum(["GLOBAL", "TANGENTIAL"]).optional().default("TANGENTIAL"),
   /** @type {boolean} "true": rotation is allowed on the edge. "false": rotation is not allowed on the edge. */
   rotationAllowed: z.boolean(),
   /** @type {string} (optional) Enum {NONE, CCW, CW, BOTH}. Allowed directions of rotation for the vehicle at the start node. */
@@ -222,7 +222,7 @@ export const MetaInformationSchema = z.object({
   /** @type {string} Creator of the LIF file (e.g., name of company, or name of person). */
   creator: z.string(),
   /** @type {string} The timestamp at which this LIF file was created/updated/modified. Timestamp format is ISO8601 in UTC. */
-  exportTimestamp: z.string(), // Can use z.string().datetime() for stricter validation
+  exportTimestamp: z.date(), // Can use z.string().datetime() for stricter validation
   /** @type {string} Version of LIF:[Major].[Minor].[Patch] (e.g., "1.0.0"). */
   lifVersion: z.string(),
 });
